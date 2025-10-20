@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voupedir/banco/restaurante_DAO.dart';
 import 'package:voupedir/tela_cad_restaurante.dart';
+import 'package:voupedir/tela_edit_restaurante.dart';
 import '../restaurante.dart';
 
 class TelaHome extends StatefulWidget {
@@ -18,7 +19,6 @@ class TelaHomeState extends State<TelaHome>{
     super.initState();
     carregarRestaurantes();
   }
-
 
   Future<void> carregarRestaurantes() async{
     final lista = await RestauranteDAO.listarTodos();
@@ -59,10 +59,36 @@ class TelaHomeState extends State<TelaHome>{
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => TelaCadRestaurante()));
+                      IconButton(onPressed: () async{
+                        TelaEditRestaurante.restaurante = await RestauranteDAO.listar(r.codigo);//obtem o restaurante
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => TelaEditRestaurante()));
+
                       }, icon: Icon(Icons.edit, color: Colors.blue,)),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.delete, color: Colors.red)),
+                      IconButton(onPressed: (){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context)  =>
+                          AlertDialog(
+                            title: Text('Confirmar ação'),
+                            content: Text('Deseja realmente excluir?'),
+                            actions: <Widget>[
+                              TextButton(onPressed: (){
+                                  RestauranteDAO.excluir(r);
+                                  setState(() {
+                                    carregarRestaurantes();
+                                  });
+                                  Navigator.pop(context);
+                              }, child: Text('Sim')),
+                              TextButton(onPressed: (){
+                                  Navigator.pop(context);
+                              }, child: Text('Não')),
+                            ],
+                          ),
+                        );
+
+
+
+                      }, icon: Icon(Icons.delete, color: Colors.red)),
                     ],
                   ),
                 ),

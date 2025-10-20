@@ -4,24 +4,24 @@ import 'tipo.dart';
 class Restaurante {
   int? _codigo;
   String? _nome;
-  double? _latitude;
-  double? _longitude;
+  String? _latitude;
+  String? _longitude;
   Usuario? _proprietario;
   Tipo? _cutinaria;
 
   // Getters
   int? get codigo => _codigo;
   String? get nome => _nome;
-  double? get latitude => _latitude;
-  double? get longitude => _longitude;
+  String? get latitude => _latitude;
+  String? get longitude => _longitude;
   Usuario? get proprietario => _proprietario;
   Tipo? get cutinaria => _cutinaria;
 
   // Setters
   set codigo(int? valor) => _codigo = valor;
   set nome(String? valor) => _nome = valor;
-  set latitude(double? valor) => _latitude = valor;
-  set longitude(double? valor) => _longitude = valor;
+  set latitude(String? valor) => _latitude = valor;
+  set longitude(String? valor) => _longitude = valor;
   set proprietario(Usuario? valor) => _proprietario = valor;
   set cutinaria(Tipo? valor) => _cutinaria = valor;
 
@@ -29,8 +29,8 @@ class Restaurante {
   Restaurante({
     int? codigo,
     String? nome,
-    double? latitude,
-    double? longitude,
+    String? latitude,
+    String? longitude,
     Usuario? proprietario,
     Tipo? cutinaria,
   }) {
